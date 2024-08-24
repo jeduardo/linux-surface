@@ -33,9 +33,14 @@ setup-secureboot)
         exit
     fi
 
-    # Install the surface secureboot certificate
+    # Install the surface secureboot key
     echo "${SB_KEY}" | base64 -d > pkg/fedora/kernel-surface/secureboot/MOK.key
-    cp pkg/keys/surface.crt pkg/fedora/kernel-surface/secureboot/MOK.crt
+    # Install the surface secureboot certificate
+    if [ -z "${SB_CERT}" ]; then
+        cp pkg/keys/surface.crt pkg/fedora/kernel-surface/secureboot/MOK.crt
+    else
+        echo "${SB_CERT}" | base64 -d > pkg/fedora/kernel-surface/secureboot/MOK.crt
+    fi
     ;;
 build-packages)
     pushd pkg/fedora/kernel-surface || exit 1
