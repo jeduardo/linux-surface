@@ -42,9 +42,10 @@ jobs:
       - name: Setup secureboot certificate
         env:
           SB_KEY: ${{ secrets.SURFACE_SB_KEY }}
+          SB_CERT: ${{ secrets.SURFACE_SB_CERT }}
         run: |
           bash ./.github/scripts/container/exec.sh \
-            -e SB_KEY \
+            -e SB_KEY -e SB_CERT \
             -- \
             bash ./.github/scripts/package/fedora.sh setup-secureboot
 
